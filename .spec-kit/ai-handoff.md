@@ -69,6 +69,7 @@ Notes for receivers:
 - Service account file is committed in `src/` and used in `admin.initializeApp`.
 - CORS is `origin: true` (allow all).
 - `firebase-debug.log` shows warning about outdated firebase-functions version; no upgrade done.
+ - GitHub push protection blocks service account JSON keys; they should not be committed.
 
 ## Open Questions / Next Steps
 - Do we need auth protection for the GUI (Firebase Auth or other)?

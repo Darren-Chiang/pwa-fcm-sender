@@ -766,3 +766,54 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2026-01-18T10:43:35.054Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendTestNotification"},"extension":{},"message":"Finishing up request with event=finish"}}
 [debug] [2026-01-18T10:43:35.054Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendTestNotification"},"extension":{},"message":"Finishing up request with event=close"}}
 [debug] [2026-01-18T10:43:35.054Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2026-01-18T11:49:08.020Z] File /Users/darrenchiangmbp2024/Desktop/worksapce/pwa/functions/README.md changed, reloading triggers {"metadata":{"emulator":{"name":"functions"},"message":"File /Users/darrenchiangmbp2024/Desktop/worksapce/pwa/functions/README.md changed, reloading triggers"}}
+[debug] [2026-01-18T11:49:09.024Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[warn] ⚠  functions: Please note that there will be breaking changes when you upgrade. 
+[debug] [2026-01-18T11:49:09.686Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions --project c2-test-1786d --config ../firebase.json",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "test": "jest"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "@google-cloud/storage": "^6.9.2",
+    "cors": "^2.8.5",
+    "firebase-admin": "^11.11.1",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/jest": "^30.0.0",
+    "firebase-functions-test": "^3.1.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2026-01-18T11:49:09.686Z] Building nodejs source
+[debug] [2026-01-18T11:49:09.686Z] Failed to find version of module node: reached end of search path /Users/darrenchiangmbp2024/Desktop/worksapce/pwa/functions/node_modules
+[info] ✔  functions: Using node@22 from host. 
+[debug] [2026-01-18T11:49:09.687Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-01-18T11:49:09.689Z] Found firebase-functions binary at '/Users/darrenchiangmbp2024/Desktop/worksapce/pwa/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8493
+
+[info] ✅ Firebase project id: c2-test-1786d
+
+[debug] [2026-01-18T11:49:10.178Z] Got response from /__/functions.yaml {"endpoints":{"sendTestNotification":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"httpsTrigger":{},"entryPoint":"sendTestNotification"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] ✔  functions: Loaded functions definitions from source: sendTestNotification. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: sendTestNotification."}}
+[debug] [2026-01-18T11:49:14.199Z] [worker-pool] Shutting down IDLE worker (us-central1-sendTestNotification) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-sendTestNotification)"}}
+[debug] [2026-01-18T11:49:14.199Z] [worker-us-central1-sendTestNotification-c8b275bd-974e-45d4-9442-a2f316f22063]: FINISHING {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendTestNotification"},"extension":{},"message":"[worker-us-central1-sendTestNotification-c8b275bd-974e-45d4-9442-a2f316f22063]: FINISHING"}}
+[debug] [2026-01-18T11:49:14.209Z] [worker-us-central1-sendTestNotification-c8b275bd-974e-45d4-9442-a2f316f22063]: exited {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendTestNotification"},"extension":{},"message":"[worker-us-central1-sendTestNotification-c8b275bd-974e-45d4-9442-a2f316f22063]: exited"}}
+[debug] [2026-01-18T11:49:14.210Z] [worker-us-central1-sendTestNotification-c8b275bd-974e-45d4-9442-a2f316f22063]: FINISHED {"metadata":{"emulator":{"name":"functions"},"function":{"name":"us-central1-sendTestNotification"},"extension":{},"message":"[worker-us-central1-sendTestNotification-c8b275bd-974e-45d4-9442-a2f316f22063]: FINISHED"}}

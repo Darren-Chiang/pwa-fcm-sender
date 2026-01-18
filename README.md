@@ -108,5 +108,23 @@ npm run test
 
 ## Notes
 
-- Service account JSON is committed in `src/` and used by `firebase-admin` initialization.
+- Service account JSON should not be committed. Store it locally and load via `GOOGLE_APPLICATION_CREDENTIALS` or keep a local copy under `src/` for development.
 - The functions emulator warns if other Firebase emulators are not running.
+
+## Service Account Credential (Local Only)
+
+To run the Functions locally, download a Firebase service account key and keep it out of Git.
+
+1) Go to Firebase Console → Project Settings → Service accounts  
+2) Click **Generate new private key** and download the JSON  
+3) Save it locally (do not commit). Recommended:
+
+- `src/your-project-service-account.json` (local only)
+
+Then update `src/index.ts` to point to your local JSON file, or use the default credentials via environment variable:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS="/absolute/path/to/your-service-account.json"
+```
+
+If you change the filename, make sure `.gitignore` keeps `src/*.json` and `lib/*.json` ignored.
