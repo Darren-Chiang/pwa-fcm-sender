@@ -22,6 +22,7 @@ describe('NotificationForm', () => {
     expect(screen.getByLabelText(/Body/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Image URL \(Optional\)/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Status/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Balance Update Type/i)).toBeInTheDocument();
     expect(screen.getByText(/Advanced Options \(JSON\)/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Send Notification/i })).toBeInTheDocument();
   });
@@ -52,6 +53,11 @@ describe('NotificationForm', () => {
 
     // Open advanced options and enter data
     fireEvent.click(screen.getByText(/Advanced Options \(JSON\)/i));
+    fireEvent.mouseDown(screen.getByLabelText(/Balance Update Type/i));
+    fireEvent.click(screen.getByRole('option', { name: /BALANCE_UPDATE/i }));
+    fireEvent.change(screen.getByLabelText(/Balance/i), { target: { value: '1000.50' } });
+    fireEvent.change(screen.getByLabelText(/Total Main Provider Balance/i), { target: { value: '200.00' } });
+    fireEvent.change(screen.getByLabelText(/Main Wallet/i), { target: { value: '1200.50' } });
     fireEvent.change(screen.getByLabelText(/Data Payload \(JSON\)/i), { target: { value: '{"key": "value"}' } });
     fireEvent.change(screen.getByLabelText(/Platform Specific Options \(JSON\)/i), { target: { value: '{"android": {"priority": "high"}}' } });
 
@@ -65,7 +71,14 @@ describe('NotificationForm', () => {
           title: 'Submit Title',
           body: 'Submit Body',
         },
-        data: { key: 'value', status: 'SUCCESS' },
+        data: {
+          key: 'value',
+          status: 'SUCCESS',
+          type: 'BALANCE_UPDATE',
+          balance: '1000.50',
+          totalMainProviderBalance: '200.00',
+          mainWallet: '1200.50',
+        },
         extraOptions: { android: { priority: 'high' } },
       });
       expect(screen.getByText(/Notification sent successfully!/i)).toBeInTheDocument();

@@ -25,6 +25,10 @@ interface NotificationFormState {
   title: string;
   body: string;
   imageUrl: string;
+  balanceUpdateType: 'NONE' | 'BALANCE_UPDATE';
+  balance: string;
+  totalMainProviderBalance: string;
+  mainWallet: string;
   status: 'SUCCESS' | 'FAILURE' | 'WARNING' | 'PENDING' | 'INFO';
   data: string; // JSON string for data payload
   extraOptions: string; // JSON string for platform specific options
@@ -39,6 +43,10 @@ const NotificationForm: React.FC = () => {
     title: '',
     body: '',
     imageUrl: '',
+    balanceUpdateType: 'NONE',
+    balance: '',
+    totalMainProviderBalance: '',
+    mainWallet: '',
     status: 'SUCCESS',
     data: '{}',
     extraOptions: '{}',
@@ -128,6 +136,14 @@ const NotificationForm: React.FC = () => {
       }
 
       dataPayload.status = formData.status;
+      if (formData.balanceUpdateType === 'BALANCE_UPDATE') {
+        dataPayload.type = 'BALANCE_UPDATE';
+        if (formData.balance) dataPayload.balance = formData.balance;
+        if (formData.totalMainProviderBalance) {
+          dataPayload.totalMainProviderBalance = formData.totalMainProviderBalance;
+        }
+        if (formData.mainWallet) dataPayload.mainWallet = formData.mainWallet;
+      }
       if (Object.keys(dataPayload).length > 0) {
         payload.data = dataPayload;
       }
@@ -260,6 +276,59 @@ const NotificationForm: React.FC = () => {
           <Typography variant="subtitle1">Advanced Options (JSON)</Typography>
         </AccordionSummary>
         <AccordionDetails>
+          <FormControl fullWidth margin="normal">
+            <InputLabel id="balance-update-label">Balance Update Type</InputLabel>
+            <Select
+              labelId="balance-update-label"
+              label="Balance Update Type"
+              value={formData.balanceUpdateType}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  balanceUpdateType: e.target.value as NotificationFormState['balanceUpdateType'],
+                }))
+              }
+            >
+              <MenuItem value="NONE">NONE</MenuItem>
+              <MenuItem value="BALANCE_UPDATE">BALANCE_UPDATE</MenuItem>
+            </Select>
+            <Typography variant="caption" sx={{ mt: 0.5, color: 'text.secondary' }}>
+              Adds data.type and balance fields for frontend wallet updates.
+            </Typography>
+          </FormControl>
+
+          <TextField
+            fullWidth
+            label="Balance"
+            name="balance"
+            value={formData.balance}
+            onChange={handleChange}
+            margin="normal"
+            helperText='Main balance (string). Example: "1000.50".'
+            disabled={formData.balanceUpdateType !== 'BALANCE_UPDATE'}
+          />
+          <TextField
+            fullWidth
+            label="Total Main Provider Balance"
+            name="totalMainProviderBalance"
+            value={formData.totalMainProviderBalance}
+            onChange={handleChange}
+            margin="normal"
+            helperText='Provider balance (string). Example: "200.00".'
+            disabled={formData.balanceUpdateType !== 'BALANCE_UPDATE'}
+          />
+          <TextField
+            fullWidth
+            label="Main Wallet"
+            name="mainWallet"
+            value={formData.mainWallet}
+            onChange={handleChange}
+            margin="normal"
+            helperText='Total wallet (string). Example: "1200.50".'
+            disabled={formData.balanceUpdateType !== 'BALANCE_UPDATE'}
+            sx={{ mb: 2 }}
+          />
+
           <TextField
             fullWidth
             label="Data Payload (JSON)"

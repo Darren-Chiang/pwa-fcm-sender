@@ -11,6 +11,7 @@
 - Payload supports `notification` (title/body/imageUrl), `data` (string values), and platform options (`android`, `webpush`, `apns`).
 - Data-only messages are allowed (notification block omitted if empty).
 - Frontend sender includes `data.status` (default `SUCCESS`) for receiver UI styling.
+- Frontend sender supports balance update payload via `data.type = "BALANCE_UPDATE"` and balance fields.
 
 ## FCM Request Payload Format (for receiver implementations)
 `sendTestNotification` expects a JSON body with exactly one target and optional payload blocks.
@@ -20,7 +21,7 @@ Required target (exactly one):
 
 Optional blocks:
 - `notification?: { title?: string; body?: string; imageUrl?: string }`
-- `data?: { [key: string]: string }` (all values must be strings, includes `status`)
+- `data?: { [key: string]: string }` (all values must be strings, includes `status` and optional balance update fields)
 - `extraOptions?: { android?: AndroidConfig; webpush?: WebpushConfig; apns?: ApnsConfig }`
 
 Supported combinations:
@@ -34,7 +35,17 @@ Notes for receivers:
 - `notification` is only sent if at least one of `title`, `body`, `imageUrl` is provided.
 - `data` is omitted if empty.
 - `data.status` is included by the sender UI (default `SUCCESS`), and is case-sensitive.
+- `data.type = "BALANCE_UPDATE"` triggers frontend wallet updates with `balance`, `totalMainProviderBalance`, `mainWallet`.
 - Platform options are passed through as-is to FCM (`android`, `webpush`, `apns`).
+
+## Advanced Options (Frontend UI)
+The frontend Advanced Options section maps directly to the API payload:
+- Balance Update fields write into `data`:
+  - `type: "BALANCE_UPDATE"` (case-sensitive)
+  - `balance`, `totalMainProviderBalance`, `mainWallet` (string values)
+- `Status` writes `data.status` for notification styling.
+- `Data Payload (JSON)` merges into `data` (string values only).
+- `Platform Specific Options (JSON)` maps to `extraOptions` (`android`, `webpush`, `apns`).
 
 ## Files Touched / Changes Made
 - Backend validation and targeting:
@@ -54,6 +65,7 @@ Notes for receivers:
     - Only includes `notification` in payload if any notification fields are present.
     - Updated helper text to valid JSON examples.
     - Added `status` selector that writes to `data.status` (default `SUCCESS`).
+    - Added balance update controls that write `data.type` and balance fields.
   - `frontend/src/App.tsx`
     - Updated description to mention token/topic/condition.
   - `frontend/src/services/api.ts`
